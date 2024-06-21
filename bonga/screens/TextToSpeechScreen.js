@@ -14,16 +14,27 @@ export default function TextToSpeechScreen() {
     async function fetchVoices() {
       try {
         const allVoices = await Speech.getAvailableVoicesAsync()
+        const desiredLocales = ['en-US', 'fr-FR', 'sw-TZ', 'sw-KE']
         const available = {}
         allVoices.forEach((voice) => {
-          if (!available[voice.language]) {
-            available[voice.language] = []
+          if (desiredLocales.includes(voice.language)) {
+            if (!available[voice.language]) {
+              available[voice.language] = []
+            }
+            available[voice.language].push(voice)
           }
-          available[voice.language].push(voice)
         })
         setVoices(available)
-        setAvailableVoices(available['en-US']) // Select the first available voice for English initially
-        setSelectedLanguage('en-US') // Select English initially
+        if (available['en-US']) {
+          setAvailableVoices(available['en-US']) // Select the first available voice for English initially
+          setSelectedLanguage('en-US') // Select English initially
+        } else {
+          const firstLocale = desiredLocales.find(locale => available[locale])
+          if (firstLocale) {
+            setAvailableVoices(available[firstLocale])
+            setSelectedLanguage(firstLocale)
+          }
+        }
       } catch (error) {
         console.error("Error fetching voices:", error)
       }
@@ -54,23 +65,21 @@ export default function TextToSpeechScreen() {
         <Picker
           selectedValue={selectedLanguage}
           onValueChange={(itemValue, itemIndex) => setSelectedLanguage(itemValue)}
-          style={[styles.picker, { color: theme.colors.primary600 }]}
+          style={[styles.picker, { color: theme.colors.secondary }]}
           itemStyle={{ 
             backgroundColor: theme.colors.surfacemixed100, 
-            color: theme.colors.primary600, 
-            fontSize:24
-          }}
-          >
-            
+            color: theme.colors.secondary, 
+            fontSize: 24
+          }}>
           {Object.keys(voices).map(language => (
             <Picker.Item key={language} label={language} value={language}/>
           ))}
         </Picker>
         <TextInput
-          style={[styles.textInput, { color: theme.colors.primary600 }]}
+          style={[styles.textInput, { color: theme.colors.secondary}]}
           multiline
           placeholder="Enter text here"
-          placeholderTextColor={theme.colors.primary600}
+          placeholderTextColor={theme.colors.text}
           value={textToSpeak}
           onChangeText={setTextToSpeak}
         />
@@ -91,7 +100,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: theme.colors.surfacemixed100,
     padding: 20,
-
   },
   picker: {
     width: '100%',
@@ -107,14 +115,14 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   button: {
-    backgroundColor: theme.colors.primary600,
+    backgroundColor: theme.colors.secondary,
     paddingVertical: 20,
     paddingHorizontal: 30,
     borderRadius: 5,
     width: '100%'
   },
   buttonText: {
-    color: theme.colors.surfacemixed100,
+    color: theme.colors.surfacemixed200,
     textAlign: 'center',
     fontSize: 24
   },

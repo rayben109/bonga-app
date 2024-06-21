@@ -5,6 +5,7 @@ import { Ionicons } from '@expo/vector-icons'
 import TextToSpeechScreen from './screens/TextToSpeechScreen'
 import SpeechToTextScreen from './screens/SpeechToTextScreen'
 import theme from './constants/theme' 
+import WebSpeechToTextScreen from './screens/WebSpeechToTextScreen'
 
 const Tab = createBottomTabNavigator()
 
@@ -20,11 +21,13 @@ export default function App() {
               iconName = focused ? 'volume-high' : 'volume-high-outline'
             } else if (route.name === 'Listen') {
               iconName = focused ? 'mic' : 'mic-outline'
+            }else if (route.name === 'Speech') {
+              iconName = focused ? 'mic' : 'mic-outline'
             }
 
             return <Ionicons name={iconName} size={size} color={color} />
           },
-          tabBarActiveTintColor: theme.colors.primary600, // Active tab color
+          tabBarActiveTintColor: theme.colors.secondary, // Active tab color
           tabBarInactiveTintColor: theme.colors.secondary, // Inactive tab color
           tabBarStyle: {
             backgroundColor: theme.colors.surfacemixed200, // Tab bar background color
@@ -37,7 +40,7 @@ export default function App() {
             shadowColor: 'transparent', // No shadow on iOS
             elevation: 0, // No elevation (shadow) on Android
           },
-          headerTintColor: theme.colors.primary600, // Header text color
+          headerTintColor: theme.colors.secondary, // Header text color
           headerTitleStyle: {
             fontWeight: 'bold', // Header text font weight
           },
@@ -50,6 +53,10 @@ export default function App() {
         <Tab.Screen 
           name="Listen" 
           component={SpeechToTextScreen} 
+        /> 
+        <Tab.Screen
+        name="Speech"
+        component={WebSpeechToTextScreen}
         />
 
       </Tab.Navigator>

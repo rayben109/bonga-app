@@ -18,6 +18,19 @@ const theme = {
       primary400: '#7d8ee0',
       primary500: '#94a0e6',
       primary600: '#aab2eb',
+
+      /** CSS DARK THEME SECONDARY COLORS */
+      secondary100: '#6BE182',
+      secondary200: '#7ee791',
+      secondary300: '#90ed9f',
+      secondary400: '#a1f3ae',
+      secondary500: '#b2f9bc',
+      secondary600: '#c2ffcb',
+
+
+
+
+
       
       /** CSS DARK THEME MIXED SURFACE COLORS */
       surfacemixed100: '#181922',
