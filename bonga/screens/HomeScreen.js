@@ -3,11 +3,11 @@ import React from "react"
 import { View, StyleSheet } from "react-native"
 import { WebView } from "react-native-webview"
 
-const WebSpeechToTextScreen = () => {
+const HomeScreen = () => {
   return (
     <View style={styles.container}>
       <WebView
-        source={{ uri: "https://rayben109.github.io/cytalk/listen.html" }}
+        source={{ uri: "https://rayben109.github.io/cytalk/" }}
         style={styles.webview}
         originWhitelist={["*"]}
         javaScriptEnabled={true}
@@ -23,8 +23,8 @@ const styles = StyleSheet.create({
   },
   webview: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "#fff", 
   },
 })
 
-export default WebSpeechToTextScreen
+export default HomeScreen
